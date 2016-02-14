@@ -1,9 +1,8 @@
 @media (min-width: 400px) {
-        .software {
-                background-image: "software.png";
+        div.software {
+                background:url(software.png);
                 background-position: 0px, 0px;
                 background-size: 128px, 240px;
-
         }
 }
 
