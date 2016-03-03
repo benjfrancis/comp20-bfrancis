@@ -31,7 +31,11 @@
         var vid = document.getElementById("music_video");
         var line = document.getElementById("lyrics");
         vid.addEventListener("timeupdate", function() {
-            if (vid.currentTime > 9 && vid.currentTime < 15) {
+            if (vid.currentTime > 0 && vid.currentTime < 4) {
+                    line.innerHTML = "<img src='SHUNT.png' alt='SHUNT'>";
+            } else if (vid.currentTime > 4 && < vid.currentTime < 9) {
+                    line.innerHTML = "<img src='shunta.png' alt='shunta'>";
+            } else if (vid.currentTime > 9 && vid.currentTime < 15) {
                     line.innerHTML = "<h2>"+lyrics[0]+"</h2>";
             } else if (vid.currentTime > 15 && vid.currentTime < 21) {
                     line.innerHTML = "<h2>"+lyrics[1]+"</h2>";
