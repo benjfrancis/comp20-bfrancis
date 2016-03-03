@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>My Old Kentucky Home</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+<h1 id="title">My Old Kentucky Home</h1>
+
+<video src="https://www.cs.tufts.edu/comp/20/my_old_kentucky_home.mp4" id="music_video" controls></video>
+<div id="lyrics"></div>
+
+<script type="text/javascript">
+        var lyrics = ["The sun shines bright in My Old Kentucky Home,",
+                       "'Tis summer, the people are gay;",
+                        "The corn-top\'s ripe and the meadow\'s in the bloom",
+                        "While the birds make music all the day.", 
+                       "The young folks roll on the little cabin floor\,",
+                        "All merry, all happy and bright;",
+                        "By \'n\' by hard times comes a knocking at the door\,",
+                        "Then My Old Kentucky Home, good night!", 
+                        "Weep no more my lady",
+                        "Oh weep no more today;",
+                        "We will sing one song",
+                        "For My Old Kentucky Home",
+                        "For My Old Kentucky Home, far away"]
+        
+        var vid = document.getElementById("music_video");
+        var line = document.getElementById("lyrics");
+        vid.addEventListener("timeupdate", function() {
+            if (vid.currentTime > 9 && vid.currentTime < 15) {
+                    line.innerHTML = "<h2>"+lyrics[0]+"</h2>";
+            } else if (vid.currentTime > 15 && vid.currentTime < 21) {
+                    line.innerHTML = "<h2>"+lyrics[1]+"</h2>";
+            } else if (vid.currentTime > 21 && vid.currentTime < 28) {
+                    line.innerHTML = "<h2>"+lyrics[2]+"</h2>";
+            } else if (vid.currentTime > 28 && vid.currentTime < 35) {
+                    line.innerHTML = "<h2>"+lyrics[3]+"</h2>";
+            } else if (vid.currentTime > 35 && vid.currentTime < 42) {
+                    line.innerHTML = "<h2>"+lyrics[4]+"</h2>";
+            } else if (vid.currentTime > 42 && vid.currentTime < 49) {
+                    line.innerHTML = "<h2>"+lyrics[5]+"</h2>";
+            } else if (vid.currentTime > 49 && vid.currentTime < 55) {
+                    line.innerHTML = "<h2>"+lyrics[6]+"</h2>";
+            } else if (vid.currentTime > 55 && vid.currentTime < 63) {
+                    line.innerHTML = "<h2>"+lyrics[7]+"</h2>";
+            } else if (vid.currentTime > 63 && vid.currentTime < 69) {
+                    line.innerHTML = "<h2>"+lyrics[8]+"</h2>";
+            } else if (vid.currentTime > 69 && vid.currentTime < 76) {
+                    line.innerHTML = "<h2>"+lyrics[9]+"</h2>";
+            } else if (vid.currentTime > 76 && vid.currentTime < 80) {
+                    line.innerHTML = "<h2>"+lyrics[10]+"</h2>";
+            } else if (vid.currentTime > 80 && vid.currentTime < 83) {
+                    line.innerHTML = "<h2>"+lyrics[11]+"</h2>";
+            } else if (vid.currentTime > 83 && vid.currentTime < 93) {
+                    line.innerHTML = "<h2>"+lyrics[12]+"</h2>";
+            } 
+            }, false);        
+        
+        
+</script>
+</body>
+</html> 
