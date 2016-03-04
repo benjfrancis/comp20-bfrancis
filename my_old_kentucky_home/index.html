@@ -33,8 +33,8 @@
         vid.addEventListener("timeupdate", function() {
             if (vid.currentTime > 0 && vid.currentTime < 4) {
                     line.innerHTML = "<img src='SHUNT.png' alt='SHUNT'>";
-            } else if (vid.currentTime > 4 && < vid.currentTime < 9) {
-                    line.innerHTML = "<img src='shunta.png' alt='shunta'>";
+            } else if (vid.currentTime > 4 && vid.currentTime < 9) {
+                    line.innerHTML = "<img src='shunta.png' alt='shunta' height='320' width='240' align='middle'>";
             } else if (vid.currentTime > 9 && vid.currentTime < 15) {
                     line.innerHTML = "<h2>"+lyrics[0]+"</h2>";
             } else if (vid.currentTime > 15 && vid.currentTime < 21) {
@@ -62,6 +62,42 @@
             } else if (vid.currentTime > 83 && vid.currentTime < 93) {
                     line.innerHTML = "<h2>"+lyrics[12]+"</h2>";
             } 
+
+
+            /*
+            if (vid.currentTime > 0 && vid.currentTime < 4) {
+                    line.innerHTML = "<img src='SHUNT.png' alt='SHUNT'>";
+            } else if (vid.currentTime > 4 && vid.currentTime < 9) {
+                    line.innerHTML = "<img src='shunta.png' alt='shunta' 
+                    width = 240px height = 320px >";
+            } else if (vid.currentTime > 9 && vid.currentTime < 15) {
+                    line.innerHTML = "<h2>"+lyrics[0]+"</h2>";
+            } else if (vid.currentTime > 15 && vid.currentTime < 21) {
+                    line.innerHTML = "<h2>"+lyrics[1]+"</h2>";
+            } else if (vid.currentTime > 21 && vid.currentTime < 28) {
+                    line.innerHTML = "<h2>"+lyrics[2]+"</h2>";
+            } else if (vid.currentTime > 28 && vid.currentTime < 35) {
+                    line.innerHTML = "<h2>"+lyrics[3]+"</h2>";
+            } else if (vid.currentTime > 35 && vid.currentTime < 42) {
+                    line.innerHTML = "<h2>"+lyrics[4]+"</h2>";
+            } else if (vid.currentTime > 42 && vid.currentTime < 49) {
+                    line.innerHTML = "<h2>"+lyrics[5]+"</h2>";
+            } else if (vid.currentTime > 49 && vid.currentTime < 55) {
+                    line.innerHTML = "<h2>"+lyrics[6]+"</h2>";
+            } else if (vid.currentTime > 55 && vid.currentTime < 63) {
+                    line.innerHTML = "<h2>"+lyrics[7]+"</h2>";
+            } else if (vid.currentTime > 63 && vid.currentTime < 69) {
+                    line.innerHTML = "<h2>"+lyrics[8]+"</h2>";
+            } else if (vid.currentTime > 69 && vid.currentTime < 76) {
+                    line.innerHTML = "<h2>"+lyrics[9]+"</h2>";
+            } else if (vid.currentTime > 76 && vid.currentTime < 80) {
+                    line.innerHTML = "<h2>"+lyrics[10]+"</h2>";
+            } else if (vid.currentTime > 80 && vid.currentTime < 83) {
+                    line.innerHTML = "<h2>"+lyrics[11]+"</h2>";
+            } else if (vid.currentTime > 83 && vid.currentTime < 93) {
+                    line.innerHTML = "<h2>"+lyrics[12]+"</h2>";
+            }
+            */ 
             }, false);        
         
         
