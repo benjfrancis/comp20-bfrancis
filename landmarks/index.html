@@ -75,21 +75,16 @@
                                 
                                 // Update map and go there...
                                 var image;
-                                /*
+                                
                                 if(type == "me") {
                                         map.panTo(object);
                                         image = 'me_marker.png';
-                                        */
-                                if (type == "people") {
-                                        if(message == "ETHAN_VALENZUELA") {
-                                                image = 'me_marker.png'; 
-                                                map.panTo(object);       
-                                        } else {
+                                        
+                                } else if (type == "people") {
                                                 image = 'people_marker.png';
                                                 var dist = calcDistance(lat, lng,
                                                                 myLat, myLng);
                                                 message += "<br>" + dist.toFixed(2) + " miles away";
-                                        }
                                 } else if (type == "landmarks") {
                                         image = 'landmark_marker.png';
                                 }
@@ -149,7 +144,13 @@
                 }
 
                 function objectsOut(objects, myLat, myLng) {
-                        console.log(objects);
+                        //console.log(objects);
+
+                        var closest_dist = 10000;
+                        var closest_lat;
+                        var closest_lng;
+                        var closest_landmark;
+
                         
                         for (var i = objects["people"].length - 1; i >= 0; i--) {
                                 var lat = objects["people"][i]["lat"];
@@ -163,15 +164,43 @@
                         
                         
                         for (var i = objects["landmarks"].length - 1; i >= 0; i--) {
+
                                 var lat = objects["landmarks"][i]["geometry"]["coordinates"][1];
                                 var lng = objects["landmarks"][i]["geometry"]["coordinates"][0];
-                                var message = objects["landmarks"][i]["properties"]["Location_Name"];
+
+                                var dist = calcDistance(myLat, myLng, lat, lng);
+                                if (dist < closest_dist) {
+                                        closest_dist = dist;
+                                        closest_landmark = objects["landmarks"][i]["properties"]["Location_Name"];
+                                        closest_lng = lng;
+                                        closest_lat = lat;
+                                }
+
+                                var message = objects["landmarks"][i]["properties"]["Details"];
                                 //console.log(message);
                                 //console.log(lat, lng);
                                 renderObject(lat, lng, myLat, myLng, 
                                         message, "landmarks");
                                 //console.log(i);
                         };
+
+                        var me_message = closest_landmark + "<br>" + 
+                                closest_dist.toFixed(2) + " miles away";
+
+                        var polyLine = new google.maps.Polyline({
+                                path:   [
+                                        {lat: myLat, lng: myLng},
+                                        {lat: closest_lat, lng: closest_lng}
+                                        ],
+                                geodesic: true,
+                                strokeColor: '#0066ff',
+                                strokeOpacity: 1.0,
+                                strokeWeight: 2
+                        });
+
+                        polyLine.setMap(map);
+
+                        renderObject(myLat, myLng, myLat, myLng, me_message, "me");
                         
                         
                 }
@@ -195,7 +224,7 @@
                         var d = R * c;
 
                         return d;
-}
+                }
 
 
 
