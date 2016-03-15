@@ -15,7 +15,7 @@
                 var myLng = 0;
                 var me = new google.maps.LatLng(myLat, myLng);
                 var myOptions = {
-                        zoom: 13, // The larger the zoom number, the bigger the zoom
+                        zoom: 13, 
                         center: me,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                         };
@@ -30,50 +30,22 @@
                 }
 
                 function getMyLocation() {
-                                if (navigator.geolocation) { // the navigator.geolocation object is supported on your browser
+                                if (navigator.geolocation) { 
                                         navigator.geolocation.getCurrentPosition(function(position) {
                                                 myLat = position.coords.latitude;
                                                 myLng = position.coords.longitude;
                                                 objects = getObjects(myLat, myLng);
-                                                //renderObject(myLat, myLng, "ETHAN_VALENZUELA", "me");
-                                                //console.log(objects);
-                                                //renderMap();
-                                                //renderMap2();
                                         });
                                 }
                                 else {
                                         alert("Geolocation is not supported by your web browser.  What a shame!");
                                 }
                 }
-                /*
-                function renderMap() {
-                                me = new google.maps.LatLng(myLat, myLng);
-                                
-                                // Update map and go there...
-                                map.panTo(me);
-        
-                                // Create a marker
-                                marker = new google.maps.Marker({
-                                        position: me,
-                                        title: "Here I Am!"
-                                });
-                                marker.setMap(map);
-                                        
-                                // Open info window on click of marker
-                                google.maps.event.addListener(marker, 'click', function() {
-                                        infowindow.setContent(marker.title);
-                                        infowindow.open(map, marker);
-                                });
-                }
-                */
 
                 function renderObject(lat, lng, myLat, myLng, message, type) {
-                                //console.log(lat + ", " + lng);
 
                                 object = new google.maps.LatLng(lat, lng);
                                 
-                                
-                                // Update map and go there...
                                 var image;
                                 
                                 if(type == "me") {
@@ -89,7 +61,6 @@
                                         image = 'landmark_marker.png';
                                 }
         
-                                // Create a marker
 
                                 marker = new google.maps.Marker({
                                         position: object,
@@ -98,16 +69,12 @@
                                 });
                                 marker.setMap(map);
                                         
-                                // Open info window on click of marker
                                 google.maps.event.addListener(marker, 'click', function() {
                                         infowindow.setContent(message);
                                         infowindow.open(this.getMap(), this);
                                 });
                 }
 
-
-
-                /////////////////////////////////////////////////////////////////////////////////////////
                 function getObjects(myLat, myLng) {
                         var request = new XMLHttpRequest();
 
@@ -115,36 +82,24 @@
 
                         var url = "https://defense-in-derpth.herokuapp.com/sendLocation";
                 
-                        //console.log(myLat + ", " + myLng);
 
                         var params = "login=ETHAN_VALENZUELA&lat="+  myLat + "&lng=" + myLng;
                         request.open("POST", url, true);
 
                         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        //request.setRequestHeader("Content-length", params.length);
-                        //request.setRequestHeader("Connection", "close");
 
                         request.onreadystatechange = function() {
                                 if(request.readyState == 4 && request.status == 200) {
                                         var raw = request.responseText;
-                                        //alert(raw);
                                         var objects = JSON.parse(raw);
                                         objectsOut(objects, myLat, myLng);
-                                        //console.log(objects);
 
                                 }
                         }
-                        //console.log(objects);
-                        
-
                         request.send(params);
-                        
-
-                        //return objects;
                 }
 
                 function objectsOut(objects, myLat, myLng) {
-                        //console.log(objects);
 
                         var closest_dist = 10000;
                         var closest_lat;
@@ -156,10 +111,12 @@
                                 var lat = objects["people"][i]["lat"];
                                 var lng = objects["people"][i]["lng"];
                                 var message = objects["people"][i]["login"];
-                                //console.log(message);
-                                renderObject(lat, lng, myLat, myLng, message, "people");
-                                //console.log(i);
-                                //console.log(lat, lng);
+                                var dist = calcDistance(lat, lng, myLat, myLng);
+
+                                if(dist < 1) {
+                                        renderObject(lat, lng, myLat, myLng, 
+                                                message, "people");
+                                }
                         };
                         
                         
@@ -177,11 +134,10 @@
                                 }
 
                                 var message = objects["landmarks"][i]["properties"]["Details"];
-                                //console.log(message);
-                                //console.log(lat, lng);
-                                renderObject(lat, lng, myLat, myLng, 
-                                        message, "landmarks");
-                                //console.log(i);
+                                if(dist < 1) {
+                                        renderObject(lat, lng, myLat, myLng, 
+                                                message, "landmarks");
+                                }
                         };
 
                         var me_message = closest_landmark + "<br>" + 
@@ -204,6 +160,7 @@
                         
                         
                 }
+                
                 /* Code taken from:
                  * http://stackoverflow.com/questions/14560999/using-the-haversine-* formula-in-javascript
                  */
@@ -225,15 +182,7 @@
 
                         return d;
                 }
-
-
-
-
-
         </script>
-
-
-
 </head>
 
 <body onload="init()">
