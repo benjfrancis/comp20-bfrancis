@@ -34,8 +34,8 @@
                                         navigator.geolocation.getCurrentPosition(function(position) {
                                                 myLat = position.coords.latitude;
                                                 myLng = position.coords.longitude;
-                                                renderObject(myLat, myLng, "ETHAN_VALENZUELA", "me");
                                                 objects = getObjects();
+                                                //renderObject(myLat, myLng, "ETHAN_VALENZUELA", "me");
                                                 //console.log(objects);
                                                 //renderMap();
                                                 //renderMap2();
@@ -72,20 +72,38 @@
 
                                 object = new google.maps.LatLng(lat, lng);
                                 
+                                
                                 // Update map and go there...
-                                map.panTo(object);
+                                var image;
+                                /*
+                                if(type == "me") {
+                                        map.panTo(object);
+                                        image = 'me_marker.png';
+                                        */
+                                if (type == "people" && message) {
+                                        if(message == "ETHAN_VALENZUELA") {
+                                                image = 'me_marker.png'; 
+                                                map.panTo(object);       
+                                        } else {
+                                                image = 'people_marker.png';
+                                        }
+                                } else if (type == "landmarks") {
+                                        image = 'landmark_marker.png';
+                                }
         
                                 // Create a marker
+
                                 marker = new google.maps.Marker({
                                         position: object,
-                                        title: message
+                                        title: message,
+                                        icon: image
                                 });
                                 marker.setMap(map);
                                         
                                 // Open info window on click of marker
                                 google.maps.event.addListener(marker, 'click', function() {
-                                        infowindow.setContent(marker.title);
-                                        infowindow.open(map, marker);
+                                        infowindow.setContent(message);
+                                        infowindow.open(this.getMap(), this);
                                 });
                 }
 
@@ -129,6 +147,7 @@
 
                 function objectsOut(objects) {
                         console.log(objects);
+                        
                         for (var i = objects["people"].length - 1; i >= 0; i--) {
                                 var lat = objects["people"][i]["lat"];
                                 var lng = objects["people"][i]["lng"];
@@ -136,16 +155,20 @@
                                 //console.log(message);
                                 renderObject(lat, lng, message, "people");
                                 //console.log(i);
+                                //console.log(lat, lng);
                         };
                         
+                        
                         for (var i = objects["landmarks"].length - 1; i >= 0; i--) {
-                                var lat = objects["landmarks"][i]["geometry"]["coordinates"][0];
-                                var lng = objects["landmarks"][i]["geometry"]["coordinates"][1];
-                                var message = objects["landmarks"][i]["login"];
+                                var lat = objects["landmarks"][i]["geometry"]["coordinates"][1];
+                                var lng = objects["landmarks"][i]["geometry"]["coordinates"][0];
+                                var message = objects["landmarks"][i]["properties"]["Location_Name"];
                                 //console.log(message);
+                                //console.log(lat, lng);
                                 renderObject(lat, lng, message, "landmarks");
                                 //console.log(i);
                         };
+                        
                         
                 }
 
