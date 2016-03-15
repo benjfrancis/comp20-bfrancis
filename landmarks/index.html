@@ -34,7 +34,7 @@
                                         navigator.geolocation.getCurrentPosition(function(position) {
                                                 myLat = position.coords.latitude;
                                                 myLng = position.coords.longitude;
-                                                objects = getObjects();
+                                                objects = getObjects(myLat, myLng);
                                                 //renderObject(myLat, myLng, "ETHAN_VALENZUELA", "me");
                                                 //console.log(objects);
                                                 //renderMap();
@@ -67,7 +67,7 @@
                 }
                 */
 
-                function renderObject(lat, lng, message, type) {
+                function renderObject(lat, lng, myLat, myLng, message, type) {
                                 //console.log(lat + ", " + lng);
 
                                 object = new google.maps.LatLng(lat, lng);
@@ -80,12 +80,15 @@
                                         map.panTo(object);
                                         image = 'me_marker.png';
                                         */
-                                if (type == "people" && message) {
+                                if (type == "people") {
                                         if(message == "ETHAN_VALENZUELA") {
                                                 image = 'me_marker.png'; 
                                                 map.panTo(object);       
                                         } else {
                                                 image = 'people_marker.png';
+                                                var dist = calcDistance(lat, lng,
+                                                                myLat, myLng);
+                                                message += "<br>" + dist.toFixed(2) + " miles away";
                                         }
                                 } else if (type == "landmarks") {
                                         image = 'landmark_marker.png';
@@ -110,7 +113,7 @@
 
 
                 /////////////////////////////////////////////////////////////////////////////////////////
-                function getObjects() {
+                function getObjects(myLat, myLng) {
                         var request = new XMLHttpRequest();
 
                         var objects;
@@ -131,7 +134,7 @@
                                         var raw = request.responseText;
                                         //alert(raw);
                                         var objects = JSON.parse(raw);
-                                        objectsOut(objects);
+                                        objectsOut(objects, myLat, myLng);
                                         //console.log(objects);
 
                                 }
@@ -145,7 +148,7 @@
                         //return objects;
                 }
 
-                function objectsOut(objects) {
+                function objectsOut(objects, myLat, myLng) {
                         console.log(objects);
                         
                         for (var i = objects["people"].length - 1; i >= 0; i--) {
@@ -153,7 +156,7 @@
                                 var lng = objects["people"][i]["lng"];
                                 var message = objects["people"][i]["login"];
                                 //console.log(message);
-                                renderObject(lat, lng, message, "people");
+                                renderObject(lat, lng, myLat, myLng, message, "people");
                                 //console.log(i);
                                 //console.log(lat, lng);
                         };
@@ -165,12 +168,36 @@
                                 var message = objects["landmarks"][i]["properties"]["Location_Name"];
                                 //console.log(message);
                                 //console.log(lat, lng);
-                                renderObject(lat, lng, message, "landmarks");
+                                renderObject(lat, lng, myLat, myLng, 
+                                        message, "landmarks");
                                 //console.log(i);
                         };
                         
                         
                 }
+                /* Code taken from:
+                 * http://stackoverflow.com/questions/14560999/using-the-haversine-* formula-in-javascript
+                 */
+                function calcDistance(lat1, lon1, lat2, lon2) {
+                        function toRad(x) {
+                                return x * Math.PI / 180;
+                        }
+
+                        var R = 6371; // km
+                        var x1 = lat2 - lat1;
+                        var dLat = toRad(x1);
+                        var x2 = lon2 - lon1;
+                        var dLon = toRad(x2)
+                        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                        var d = R * c;
+
+                        return d;
+}
+
+
 
 
 
