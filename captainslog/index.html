@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+        <title>Captain's Log</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script>
+
+                var log;
+
+                localStorage.setItem('log', log);
+
+                $(document).bind('keypress', function(input){
+                        if(input.which === 13) {
+                                
+                                var log = localStorage["log"];
+
+                                var new_entry = " ";
+                                var msg = document.getElementById("msg").value;
+                                //console.log(msg);
+
+                                var now = new Date();
+                                var month = now.getMonth() + 1;
+                                var day = now.getDate();
+                                var year = now.getFullYear();
+                                var min = now.getMinutes();
+                                var hour = now.getHours();
+
+                                new_entry = "<br>" + month + "\/" + day + "\/" + year
+                                 + " " + hour + ":" + min +  "<br>" + msg;
+                                
+
+                                log += new_entry;
+
+                                document.getElementById("log").innerHTML = log;
+
+                                document.getElementById("msg").value = "";
+
+                                localStorage["log"] = log;
+
+                        }
+                });
+
+
+                
+
+                
+
+
+
+
+        </script>
+</head>
+
+<body>
+        <h1>Captain's Log</h1>
+        <h3>New entry: <input type="text" id="msg" name="msg" size="30" /></h3>
+        <div id="log"></div>
+</body>
+</html>
