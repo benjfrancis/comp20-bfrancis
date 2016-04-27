@@ -1,0 +1,63 @@
+h1 {    
+        font-family: Verdana;
+        font-style: normal;
+        font-size: 26px;
+        font-weight: bold;
+        text-align: left;
+
+        color: #ffffff;
+        background-color: #000000;
+}
+
+p {
+        font-family: Verdana;
+        font-style: normal;
+        font-size: 14px;
+        font-weight: normal;
+        text-align: left;
+        width: 85%;
+
+        color: #ffffff;
+        background-color: #000000;
+}
+
+h2 {
+        font-family: Verdana;
+        font-style: normal;
+        font-size: 22px;
+        font-weight: normal;
+        text-align: left;
+
+        color: #ffffff;
+        background-color: #000000;
+}
+
+h3 {
+        font-family: Verdana;
+        font-style: normal;
+        font-size: 18px;
+        font-weight: normal;
+        text-align: left;  
+
+        color: #ffffff;
+        background-color: #000000;
+}
+
+
+
+a {
+        font-family: Verdana;
+        font-style: normal;
+        font-size: 18px;
+        font-weight: normal;
+        text-align: left;  
+
+        color: #ffffff;
+        background-color: #000000;        
+}
+
+
+body {
+        background-color: #000000; 
+}
+
